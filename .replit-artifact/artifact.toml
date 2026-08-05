@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/aidlook-demo/"
+title = "AIDLOOK Demo Web"
+description = "Versione web demo dell'app AIDLOOK. Replica fedelmente tutte le schermate dell'app mobile (Aidlooker e Attività) in un frame telefono, con dati mock identici all'app Expo. Scopo: condividere con investitori/clienti via link senza installare nulla."
+version = "1.0.0"
+id = "artifacts/aidlook-demo"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/aidlook-demo/" ]
+localPort = 25117
+
+[services.development]
+run = "pnpm --filter @workspace/aidlook-demo run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/aidlook-demo", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/aidlook-demo/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25117"
+BASE_PATH = "/aidlook-demo/"
