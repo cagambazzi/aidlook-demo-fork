@@ -8,7 +8,7 @@ import { HomeAidlooker } from './screens/aidlooker/Home';
 import { ArmadioAidlooker } from './screens/aidlooker/Armadio';
 import { MarketplaceAidlooker } from './screens/aidlooker/Marketplace';
 import { NotificheAidlooker } from './screens/aidlooker/Notifiche';
-import { SecondHandAidlooker } from './screens/aidlooker/SecondHand';
+import { PassaportoScreen } from './screens/Passaporto';
 
 // Attività
 import { HomeAttivita } from './screens/attivita/Home';
@@ -40,7 +40,7 @@ export default function App() {
         case 'armadio': return <ArmadioAidlooker />;
         case 'marketplace': return <MarketplaceAidlooker />;
         case 'notifiche': return <NotificheAidlooker />;
-        case 'secondhand': return <SecondHandAidlooker />;
+        case 'passaporto': return <PassaportoScreen />;
         default: return <HomeAidlooker onLogout={handleLogout} onNavigate={setCurrentTab} />;
       }
     }
@@ -48,10 +48,10 @@ export default function App() {
     if (role === 'attivita') {
       switch (currentTab) {
         case 'home': return <HomeAttivita onLogout={handleLogout} onNavigate={setCurrentTab} />;
-        case 'crm': return <CRMAttivita />;
+        case 'vendita': return <VenditaAttivita />;
         case 'magazzino': return <MagazzinoAttivita />;
         case 'notifiche': return <NotificheAttivita />;
-        case 'vendita': return <VenditaAttivita />;
+        case 'crm': return <CRMAttivita />;
         default: return <HomeAttivita onLogout={handleLogout} onNavigate={setCurrentTab} />;
       }
     }

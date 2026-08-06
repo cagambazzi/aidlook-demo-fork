@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Shirt, Search, Bell, RefreshCw, Users, Package, ShoppingCart } from 'lucide-react';
+import { Home, Shirt, Search, Bell, Shield, Users, Package, ShoppingCart } from 'lucide-react';
 
 export type Role = 'welcome' | 'aidlooker' | 'attivita';
 
@@ -15,17 +15,17 @@ export function TabBar({ role, currentTab, onTabChange }: TabBarProps) {
   const aidlookerTabs = [
     { id: 'home', label: 'Home', icon: Home },
     { id: 'armadio', label: 'Armadio', icon: Shirt },
-    { id: 'marketplace', label: 'Marketplace', icon: Search },
+    { id: 'marketplace', label: 'Cerca', icon: Search },
     { id: 'notifiche', label: 'Notifiche', icon: Bell, badge: 2 },
-    { id: 'secondhand', label: 'Second Hand', icon: RefreshCw },
+    { id: 'passaporto', label: 'Passaporto', icon: Shield },
   ];
 
   const attivitaTabs = [
     { id: 'home', label: 'Home', icon: Home },
-    { id: 'crm', label: 'CRM', icon: Users },
+    { id: 'vendita', label: 'Vendite', icon: ShoppingCart },
     { id: 'magazzino', label: 'Magazzino', icon: Package },
     { id: 'notifiche', label: 'Notifiche', icon: Bell, badge: 3 },
-    { id: 'vendita', label: 'Vendita', icon: ShoppingCart },
+    { id: 'crm', label: 'CRM', icon: Users },
   ];
 
   const tabs = role === 'aidlooker' ? aidlookerTabs : attivitaTabs;
