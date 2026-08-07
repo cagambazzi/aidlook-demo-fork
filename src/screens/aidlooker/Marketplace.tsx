@@ -193,6 +193,25 @@ export function MarketplaceAidlooker() {
 
       {/* ── Grid ───────────────────────────────────────────────────────────── */}
       <div className="flex-1 overflow-y-auto hide-scrollbar pb-24">
+        {/* Second Hand tip banner */}
+        {(segment === 'secondhand' || segment === 'tutti') && (
+          <div className="mx-3 mt-3 mb-1 rounded-[16px] overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#2d2320] p-4 flex gap-3 items-start">
+            <div className="text-[22px] leading-none mt-0.5">✨</div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-bold text-white leading-snug">
+                Il capo che cerchi esiste già — è nell'armadio di qualcuno.
+              </p>
+              <p className="text-[11px] text-white/60 mt-1 leading-relaxed">
+                Il tuo negozio Aidlook può cercarlo nella rete: magari chi lo possiede è pronto a venderlo.
+              </p>
+              <button className="mt-2.5 inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 transition-colors text-white text-[11px] font-semibold px-3 py-1.5 rounded-full">
+                <span>Chiedi al negozio</span>
+                <span className="text-white/50">→</span>
+              </button>
+            </div>
+          </div>
+        )}
+
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-muted-foreground gap-3">
             <ShoppingBag size={36} className="opacity-20" />
@@ -205,7 +224,7 @@ export function MarketplaceAidlooker() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-px bg-border p-px">
+          <div className="grid grid-cols-2 gap-px bg-border p-px mt-3">
             {filtered.map(item => (
               <ProductCard
                 key={item.id}
