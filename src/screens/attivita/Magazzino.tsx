@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Search, X, Package, RefreshCw, Send, MessageCircle, SlidersHorizontal, ShoppingBag, Barcode } from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Search, X, Package, RefreshCw, Send, MessageCircle, SlidersHorizontal, ShoppingBag, Barcode, Clock, ChevronDown, Zap } from 'lucide-react';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -209,6 +209,52 @@ export function MagazzinoAttivita() {
   const [toast, setToast] = useState('');
   const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(''), 3000); };
 
+  // Invia al cliente — timer 10 min
+  const [now, setNow] = useState(Date.now());
+  const [inviaSale, setInviaSale] = useState<{ customerName: string; item: string; expiresAt: number; status: 'pending' | 'paid' | 'expired' } | null>(null);
+  const [showInviaCustomer, setShowInviaCustomer] = useState(false);
+  const [selectedInviaCustomer, setSelectedInviaCustomer] = useState<typeof CRM_CUSTOMERS[0] | null>(null);
+  const [pendingInviaItem, setPendingInviaItem] = useState<{ brand: string; name: string; size: string } | null>(null);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setNow(Date.now());
+      setInviaSale(prev => {
+        if (!prev || prev.status !== 'pending') return prev;
+        if (Date.now() > prev.expiresAt) return { ...prev, status: 'expired' };
+        return prev;
+      });
+    }, 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  function msToCountdown(ms: number) {
+    if (ms <= 0) return '00:00';
+    const m = Math.floor(ms / 60000);
+    const s = Math.floor((ms % 60000) / 1000);
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+
+  function handleInviaAlCliente(brand: string, name: string, size: string) {
+    setPendingInviaItem({ brand, name, size });
+    setSelectedInviaCustomer(null);
+    setShowInviaCustomer(true);
+    setSelectedStock(null);
+  }
+
+  function confirmInvia() {
+    if (!pendingInviaItem || !selectedInviaCustomer) return;
+    setInviaSale({
+      customerName: selectedInviaCustomer.name,
+      item: `${pendingInviaItem.brand} ${pendingInviaItem.name} · ${pendingInviaItem.size}`,
+      expiresAt: Date.now() + 10 * 60 * 1000,
+      status: 'pending',
+    });
+    setShowInviaCustomer(false);
+    setPendingInviaItem(null);
+    setSelectedInviaCustomer(null);
+  }
+
   // ── Stock filtering ──────────────────────────────────────────────────────────
   const filteredStock = useMemo(() => {
     return NETWORK_ITEMS.filter(item => {
@@ -285,6 +331,37 @@ export function MagazzinoAttivita() {
 
   return (
     <div className="flex flex-col h-full bg-background animate-in fade-in slide-in-from-bottom-4 duration-300 relative">
+
+      {/* ── Active sale banner ───────────────────────────────────────────────── */}
+      {inviaSale && (
+        <div className={`flex items-center gap-2 px-4 py-3 text-white text-xs font-bold shrink-0 ${
+          inviaSale.status === 'paid' ? 'bg-green-600' : inviaSale.status === 'expired' ? 'bg-red-500' : 'bg-primary'
+        }`}>
+          {inviaSale.status === 'pending' && (
+            <>
+              <Clock size={13} />
+              <span className="flex-1 truncate">{inviaSale.customerName} · {inviaSale.item}</span>
+              <span className="font-mono shrink-0">{msToCountdown(inviaSale.expiresAt - now)}</span>
+              <button
+                onClick={() => setInviaSale(prev => prev ? { ...prev, status: 'paid' } : null)}
+                className="shrink-0 bg-white/20 px-2.5 py-1 rounded-md text-[11px] ml-1"
+              >Pagato ✓</button>
+            </>
+          )}
+          {inviaSale.status === 'paid' && (
+            <>
+              <span className="flex-1">Pagamento ricevuto ✓</span>
+              <button onClick={() => setInviaSale(null)}><X size={14} /></button>
+            </>
+          )}
+          {inviaSale.status === 'expired' && (
+            <>
+              <span className="flex-1">Scaduto — il cliente non ha pagato</span>
+              <button onClick={() => setInviaSale(null)}><X size={14} /></button>
+            </>
+          )}
+        </div>
+      )}
 
       {/* ── Header ───────────────────────────────────────────────────────────── */}
       <div className="sticky top-0 z-20 bg-background border-b border-border">
@@ -622,24 +699,31 @@ export function MagazzinoAttivita() {
               </div>
               {/* CTA */}
               {selectedStockSize && (
-                <div>
+                <div className="space-y-2">
                   {(MY_STOCK_MAP[selectedStock.supplierCode] ?? []).includes(selectedStockSize) ? (
-                    <div className="bg-emerald-50 border border-emerald-200 rounded-[14px] p-3.5 text-sm font-semibold text-emerald-700 flex items-center gap-2">
+                    <div className="bg-emerald-50 border border-emerald-200 rounded-[14px] p-3 text-sm font-semibold text-emerald-700 flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-emerald-500" />
                       Taglia {selectedStockSize} disponibile nel tuo stock
                     </div>
                   ) : requestedStock.has(selectedStock.id) ? (
-                    <div className="bg-secondary border border-border rounded-[14px] p-3.5 text-sm font-semibold text-muted-foreground text-center">
+                    <div className="bg-secondary border border-border rounded-[14px] p-3 text-sm font-semibold text-muted-foreground text-center">
                       Richiesta inviata al fornitore ✓
                     </div>
                   ) : (
                     <button
                       onClick={handleRequestStock}
-                      className="w-full bg-primary text-primary-foreground font-bold py-3.5 rounded-[14px] text-sm active:scale-[0.98] transition-transform"
+                      className="w-full bg-secondary text-foreground font-bold py-3 rounded-[14px] text-sm active:scale-[0.98] transition-transform border border-border"
                     >
                       Richiedi taglia {selectedStockSize} al fornitore
                     </button>
                   )}
+                  {/* Invia al cliente */}
+                  <button
+                    onClick={() => handleInviaAlCliente(selectedStock.brand, selectedStock.name, selectedStockSize)}
+                    className="w-full bg-primary text-primary-foreground font-bold py-3 rounded-[14px] text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
+                  >
+                    <Zap size={14} /> Invia al cliente · timer 10 min
+                  </button>
                 </div>
               )}
             </div>
@@ -697,6 +781,59 @@ export function MagazzinoAttivita() {
                 }`}
               >
                 <Send size={15} /> Invia proposta
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Invia al cliente — customer picker ──────────────────────────────── */}
+      {showInviaCustomer && pendingInviaItem && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 animate-in fade-in duration-200">
+          <div className="w-full sm:w-[390px] h-[80vh] bg-background rounded-t-[24px] flex flex-col overflow-hidden animate-in slide-in-from-bottom-full duration-300">
+            <div className="flex items-center justify-between p-4 border-b border-border">
+              <h2 className="font-bold text-lg">Scegli il cliente</h2>
+              <button onClick={() => { setShowInviaCustomer(false); setPendingInviaItem(null); }} className="p-2 bg-secondary rounded-full">
+                <X size={18} />
+              </button>
+            </div>
+            {/* Item preview */}
+            <div className="bg-secondary px-4 py-3 flex items-center gap-2 border-b border-border">
+              <Zap size={13} className="text-primary shrink-0" />
+              <div>
+                <p className="font-semibold text-sm">{pendingInviaItem.brand} {pendingInviaItem.name} · {pendingInviaItem.size}</p>
+                <p className="text-xs text-muted-foreground">Il cliente riceverà un link con timer di 10 minuti per pagare</p>
+              </div>
+            </div>
+            <div className="flex-1 overflow-y-auto px-4 pt-3 pb-4 space-y-2">
+              {CRM_CUSTOMERS.map(c => (
+                <button
+                  key={c.id}
+                  onClick={() => setSelectedInviaCustomer(c)}
+                  className={`w-full flex items-center gap-3 p-3.5 rounded-[12px] border text-left transition-colors ${
+                    selectedInviaCustomer?.id === c.id ? 'border-primary bg-primary/5' : 'border-border bg-card'
+                  }`}
+                >
+                  <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center font-semibold text-sm shrink-0">
+                    {c.name.charAt(0)}
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-semibold text-sm">{c.name}</p>
+                    {c.size && <p className="text-xs text-muted-foreground">Taglia abituale: {c.size}</p>}
+                  </div>
+                  {selectedInviaCustomer?.id === c.id && <span className="text-primary text-lg">✓</span>}
+                </button>
+              ))}
+            </div>
+            <div className="p-4 border-t border-border">
+              <button
+                onClick={confirmInvia}
+                disabled={!selectedInviaCustomer}
+                className={`w-full py-3.5 font-bold rounded-[14px] flex items-center justify-center gap-2 transition-all ${
+                  selectedInviaCustomer ? 'bg-primary text-primary-foreground active:scale-[0.98]' : 'bg-secondary text-muted-foreground cursor-not-allowed'
+                }`}
+              >
+                <Zap size={15} /> Invia link di pagamento
               </button>
             </div>
           </div>
