@@ -136,62 +136,63 @@ export function ArmadioAidlooker() {
 
       <div className="px-4 mt-3 space-y-5">
 
-        {/* Store inquiries — negozio chiede se vuoi vendere */}
-        {storeInquiries.map(inq => {
-          const remaining = inq.expiresAt - now;
-          const urgent = remaining < 2 * 3600000; // < 2h
-          return (
-            <div
-              key={inq.id}
-              className={`border-[1.5px] rounded-[16px] p-4 ${urgent ? 'bg-amber-50 border-amber-400' : 'bg-card border-border'}`}
-            >
-              <div className="flex items-center gap-2 mb-2.5">
-                <Store size={13} className={urgent ? 'text-amber-600' : 'text-muted-foreground'} />
-                <span className={`text-[11px] font-bold flex-1 ${urgent ? 'text-amber-700' : 'text-foreground'}`}>
-                  {inq.storeName} ti fa una proposta
-                </span>
-                <span className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[12px] font-bold text-white ${urgent ? 'bg-amber-500' : 'bg-foreground'}`}>
-                  <Clock size={11} />
-                  {msToHours(remaining)}
-                </span>
-              </div>
-              {/* Item swatch */}
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-12 rounded-[8px] shrink-0 border border-black/5" style={{ backgroundColor: '#C4956A' }} />
-                <div>
-                  <p className="font-bold text-sm">{inq.brand}</p>
-                  <p className="text-xs text-muted-foreground">{inq.itemName} · {inq.color} · {inq.size}</p>
-                  <p className="text-[11px] text-muted-foreground mt-0.5">Non è in vendita — il negozio chiede se sei interessata</p>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => handleInquiryRespond(inq.id, true)}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-primary text-primary-foreground text-xs font-bold rounded-[10px] active:scale-95 transition-transform"
-                >
-                  <CheckCircle size={13} /> Sì, parliamone
-                </button>
-                <button
-                  onClick={() => handleInquiryRespond(inq.id, false)}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-secondary text-foreground text-xs font-bold rounded-[10px] active:scale-95 transition-transform"
-                >
-                  <XCircle size={13} /> No, lo tengo
-                </button>
-              </div>
-            </div>
-          );
-        })}
-
-        {/* Pending proposals */}
-        {proposals.length > 0 && (
+        {/* Pending proposals + store inquiries */}
+        {(proposals.length > 0 || storeInquiries.length > 0) && (
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-bold">Proposte in attesa · {proposals.length}</span>
-              {proposals.length > 1 && (
+              <span className="text-sm font-bold">In attesa · {proposals.length + storeInquiries.length}</span>
+              {(proposals.length + storeInquiries.length) > 1 && (
                 <span className="text-xs text-muted-foreground">Scorri →</span>
               )}
             </div>
             <div className="flex overflow-x-auto snap-x snap-mandatory gap-3 -mx-4 px-4 pb-2 hide-scrollbar">
+              {/* Store inquiry cards */}
+              {storeInquiries.map(inq => {
+                const remaining = inq.expiresAt - now;
+                const urgent = remaining < 2 * 3600000;
+                return (
+                  <div
+                    key={inq.id}
+                    className={`w-[88%] shrink-0 snap-center border-[1.5px] rounded-[16px] p-4 transition-colors ${
+                      urgent ? 'bg-amber-50 border-amber-400' : 'bg-card border-border'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 mb-2.5">
+                      <Store size={13} className={urgent ? 'text-amber-600' : 'text-muted-foreground'} />
+                      <span className={`text-[11px] font-bold flex-1 ${urgent ? 'text-amber-700' : 'text-foreground'}`}>
+                        {inq.storeName} ti fa una domanda
+                      </span>
+                      <span className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[12px] font-bold text-white ${urgent ? 'bg-amber-500' : 'bg-foreground'}`}>
+                        <Clock size={11} />
+                        {msToHours(remaining)}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-12 rounded-[8px] shrink-0 border border-black/5" style={{ backgroundColor: '#C4956A' }} />
+                      <div>
+                        <p className="font-bold text-sm">{inq.brand} — {inq.itemName}</p>
+                        <p className="text-xs text-muted-foreground">{inq.color} · {inq.size}</p>
+                        <p className="text-[11px] text-muted-foreground mt-0.5">Saresti disposta a venderlo?</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleInquiryRespond(inq.id, true)}
+                        className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-bold rounded-[12px] active:scale-95 transition-transform ${urgent ? 'bg-amber-500 text-white' : 'bg-primary text-primary-foreground'}`}
+                      >
+                        <CheckCircle size={13} /> Sì, parliamone
+                      </button>
+                      <button
+                        onClick={() => handleInquiryRespond(inq.id, false)}
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-secondary text-foreground text-xs font-bold rounded-[12px] active:scale-95 transition-transform"
+                      >
+                        <XCircle size={13} /> No, lo tengo
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+
               {proposals.map(p => {
                 const remaining = p.expiresAt - now;
                 const urgent = remaining < 2 * 60 * 1000;
