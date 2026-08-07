@@ -24,7 +24,7 @@ const INITIAL_NOTIFS: MemberNotif[] = [
     type: 'store_inquiry',
     emoji: '🏪',
     title: 'Il tuo negozio ti ha fatto una domanda',
-    body: 'Boutique Torino ha notato il Loro Piana Cashmere Turtleneck nel tuo armadio — non è in vendita, ma hanno un cliente che lo cerca disperatamente. Saresti disposta a valutare una proposta?',
+    body: 'Boutique Torino vorrebbe sapere se sei disposta a vendere il tuo Loro Piana Cashmere Turtleneck.',
     storeName: 'Boutique Torino',
     itemBrand: 'Loro Piana',
     itemName: 'Cashmere Turtleneck',
