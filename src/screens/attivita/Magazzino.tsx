@@ -641,12 +641,12 @@ export function MagazzinoAttivita() {
           onClick={() => setSelectedStock(null)}
         >
           <div
-            className="w-full sm:w-[390px] max-h-[85vh] bg-background rounded-t-[24px] flex flex-col overflow-hidden animate-in slide-in-from-bottom-full duration-300"
+            className="w-full sm:w-[390px] h-[92vh] bg-background rounded-t-[24px] flex flex-col overflow-hidden animate-in slide-in-from-bottom-full duration-300"
             onClick={e => e.stopPropagation()}
           >
-            {/* Swatch */}
-            <div className="h-40 shrink-0 relative flex items-end pb-4 px-5" style={{ backgroundColor: selectedStock.imageColor }}>
-              <button onClick={() => setSelectedStock(null)} className="absolute top-4 right-4 p-2 bg-black/20 text-white rounded-full">
+            {/* Swatch — compact */}
+            <div className="h-28 shrink-0 relative flex items-end pb-3 px-4" style={{ backgroundColor: selectedStock.imageColor }}>
+              <button onClick={() => setSelectedStock(null)} className="absolute top-3 right-4 p-2 bg-black/20 text-white rounded-full">
                 <X size={18} />
               </button>
               {(MY_STOCK_MAP[selectedStock.supplierCode] ?? []).length > 0 && (
@@ -655,28 +655,35 @@ export function MagazzinoAttivita() {
                 </div>
               )}
             </div>
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto p-5 bg-card rounded-t-[24px] -mt-5 space-y-4">
-              <div>
-                <p className="font-bold text-xl">{selectedStock.brand}</p>
-                <p className="text-muted-foreground text-sm">{selectedStock.name} · {selectedStock.color}</p>
-                <p className="font-mono text-[10px] text-muted-foreground mt-0.5 bg-secondary px-2 py-1 rounded inline-block mt-1">{selectedStock.supplierCode}</p>
+
+            {/* Scrollable content */}
+            <div className="flex-1 overflow-y-auto bg-card rounded-t-[20px] -mt-4 px-5 pt-5 pb-6 space-y-4">
+              {/* Title row */}
+              <div className="flex items-start gap-2 justify-between">
+                <div className="min-w-0">
+                  <p className="font-bold text-lg leading-tight">{selectedStock.brand}</p>
+                  <p className="text-muted-foreground text-sm truncate">{selectedStock.name} · {selectedStock.color}</p>
+                </div>
+                <span className="font-mono text-[10px] text-muted-foreground bg-secondary px-2 py-1 rounded shrink-0 mt-0.5">{selectedStock.supplierCode}</span>
               </div>
-              <div className="grid grid-cols-3 gap-3">
+
+              {/* Info grid */}
+              <div className="grid grid-cols-3 gap-2">
                 {[
-                  ['Retail', `€${selectedStock.price.toLocaleString()}`],
-                  ['Wholesale', `€${selectedStock.wholesale.toLocaleString()}`],
-                  ['Origine', selectedStock.origin],
+                  ['Retail',     `€${selectedStock.price.toLocaleString()}`],
+                  ['Wholesale',  `€${selectedStock.wholesale.toLocaleString()}`],
+                  ['Origine',    selectedStock.origin],
                 ].map(([l, v]) => (
-                  <div key={l} className="bg-background rounded-[10px] p-2.5 border border-border">
+                  <div key={l as string} className="bg-background rounded-[10px] p-2.5 border border-border">
                     <p className="text-[9px] text-muted-foreground uppercase tracking-wider mb-1">{l}</p>
                     <p className="text-xs font-bold">{v}</p>
                   </div>
                 ))}
               </div>
+
               {/* Size picker */}
               <div>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-2">Taglie</p>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-2">Taglie disponibili</p>
                 <div className="flex flex-wrap gap-2">
                   {selectedStock.sizes.map(s => {
                     const own = (MY_STOCK_MAP[selectedStock.supplierCode] ?? []).includes(s);
@@ -691,36 +698,36 @@ export function MagazzinoAttivita() {
                       >
                         {own && <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />}
                         {s}
-                        {own && <span className="text-[9px] text-emerald-600 font-normal">stock</span>}
+                        {own && <span className="text-[9px] text-emerald-600 font-normal ml-0.5">stock</span>}
                       </button>
                     );
                   })}
                 </div>
               </div>
-              {/* CTA */}
+
+              {/* CTAs — always visible inside scroll */}
               {selectedStockSize && (
-                <div className="space-y-2">
+                <div className="space-y-2 pt-1">
                   {(MY_STOCK_MAP[selectedStock.supplierCode] ?? []).includes(selectedStockSize) ? (
-                    <div className="bg-emerald-50 border border-emerald-200 rounded-[14px] p-3 text-sm font-semibold text-emerald-700 flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                      Taglia {selectedStockSize} disponibile nel tuo stock
+                    <div className="bg-emerald-50 border border-emerald-200 rounded-[12px] p-3 text-sm font-semibold text-emerald-700 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+                      Taglia {selectedStockSize} nel tuo stock
                     </div>
                   ) : requestedStock.has(selectedStock.id) ? (
-                    <div className="bg-secondary border border-border rounded-[14px] p-3 text-sm font-semibold text-muted-foreground text-center">
+                    <div className="bg-secondary border border-border rounded-[12px] p-3 text-sm font-semibold text-muted-foreground text-center">
                       Richiesta inviata al fornitore ✓
                     </div>
                   ) : (
                     <button
                       onClick={handleRequestStock}
-                      className="w-full bg-secondary text-foreground font-bold py-3 rounded-[14px] text-sm active:scale-[0.98] transition-transform border border-border"
+                      className="w-full bg-secondary text-foreground font-bold py-3 rounded-[12px] text-sm active:scale-[0.98] transition-transform border border-border"
                     >
                       Richiedi taglia {selectedStockSize} al fornitore
                     </button>
                   )}
-                  {/* Invia al cliente */}
                   <button
                     onClick={() => handleInviaAlCliente(selectedStock.brand, selectedStock.name, selectedStockSize)}
-                    className="w-full bg-primary text-primary-foreground font-bold py-3 rounded-[14px] text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
+                    className="w-full bg-primary text-primary-foreground font-bold py-3 rounded-[12px] text-sm flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
                   >
                     <Zap size={14} /> Invia al cliente · timer 10 min
                   </button>
