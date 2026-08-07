@@ -52,6 +52,7 @@ export default function App() {
         case 'magazzino': return <MagazzinoAttivita />;
         case 'notifiche': return <NotificheAttivita />;
         case 'crm': return <CRMAttivita />;
+        case 'passaporto': return <PassaportoScreen storeMode />;
         default: return <HomeAttivita onLogout={handleLogout} onNavigate={setCurrentTab} />;
       }
     }

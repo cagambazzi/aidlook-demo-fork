@@ -17,13 +17,16 @@ const MOCK_PASSPORT = {
   retailPrice: 190,
   purchaseDate: '12 Mar 2025',
   storeOrigin: 'Boutique Milano Centro',
+  currentOwner: 'Marco B.',
+  ownerForSale: false,
   history: [
-    { date: '12 Mar 2025', event: 'Venduto', detail: 'Boutique Milano Centro' },
-    { date: '15 Mar 2025', event: 'Registrato nel Guardaroba', detail: 'Marco B.' },
+    { date: '12 Mar 2025', event: 'Produzione & spedizione',  detail: 'Stabilimento Bangladesh → Boutique Milano Centro' },
+    { date: '12 Mar 2025', event: 'Venduto in negozio',       detail: 'Boutique Milano Centro → Marco B.' },
+    { date: '15 Mar 2025', event: 'Registrato nel Guardaroba', detail: 'Marco B. · Aidlook' },
   ],
 };
 
-export function PassaportoScreen() {
+export function PassaportoScreen({ storeMode = false }: { storeMode?: boolean }) {
   const [state, setState] = useState<PassportState>('landing');
   const [progress, setProgress] = useState(0);
 
@@ -225,6 +228,38 @@ export function PassaportoScreen() {
               </div>
             ))}
           </div>
+
+          {/* Store-mode: current owner panel */}
+          {storeMode && (
+            <div className={`rounded-[14px] border p-4 space-y-3 ${MOCK_PASSPORT.ownerForSale ? 'bg-emerald-50 border-emerald-200' : 'bg-amber-50 border-amber-200'}`}>
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-full bg-secondary flex items-center justify-center font-bold text-sm shrink-0">
+                  {MOCK_PASSPORT.currentOwner.charAt(0)}
+                </div>
+                <div className="flex-1">
+                  <p className="font-bold text-sm">Proprietario attuale</p>
+                  <p className="text-xs text-muted-foreground">{MOCK_PASSPORT.currentOwner} · Aidlook</p>
+                </div>
+                {MOCK_PASSPORT.ownerForSale ? (
+                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full border border-emerald-300">In vendita</span>
+                ) : (
+                  <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-2 py-1 rounded-full border border-amber-300">Non in vendita</span>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                {MOCK_PASSPORT.ownerForSale
+                  ? 'Il proprietario ha messo il capo in vendita. Puoi proporlo a un tuo cliente.'
+                  : 'Il proprietario non ha messo il capo in vendita. Puoi chiedergli se è interessato a cederlo.'}
+              </p>
+              <button className={`w-full py-2.5 rounded-[10px] text-xs font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform ${
+                MOCK_PASSPORT.ownerForSale
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-amber-500 text-white'
+              }`}>
+                {MOCK_PASSPORT.ownerForSale ? '→ Proponi a un cliente' : '→ Chiedi se vuole venderlo'}
+              </button>
+            </div>
+          )}
 
           {/* History */}
           <div>

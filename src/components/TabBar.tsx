@@ -26,6 +26,7 @@ export function TabBar({ role, currentTab, onTabChange }: TabBarProps) {
     { id: 'magazzino', label: 'Magazzino', icon: Package },
     { id: 'notifiche', label: 'Notifiche', icon: Bell, badge: 3 },
     { id: 'crm', label: 'CRM', icon: Users },
+    { id: 'passaporto', label: 'Pass.', icon: Shield },
   ];
 
   const tabs = role === 'aidlooker' ? aidlookerTabs : attivitaTabs;
