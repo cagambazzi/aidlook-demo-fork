@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Plus, Clock, ChevronRight, X, Shirt, Bell, RefreshCw } from 'lucide-react';
+import { Plus, Clock, ChevronRight, X, Shirt, Bell, RefreshCw, Store, CheckCircle, XCircle } from 'lucide-react';
 
 const CATEGORIES = ['Tutti', 'Cappotto', 'Giacca', 'Piumino', 'Felpa', 'Maglia', 'Blusa', 'Pantaloni', 'Jeans', 'Borsa', 'Scarpe'];
 
@@ -27,6 +27,14 @@ function msToCountdown(ms: number): string {
   const m = Math.floor(ms / 60000);
   const s = Math.floor((ms % 60000) / 1000);
   return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+function msToHours(ms: number): string {
+  if (ms <= 0) return 'Scaduta';
+  const h = Math.floor(ms / 3600000);
+  const m = Math.floor((ms % 3600000) / 60000);
+  if (h > 0) return `${h}h ${m}m`;
+  return `${m}m`;
 }
 
 export function ArmadioAidlooker() {
@@ -59,6 +67,28 @@ export function ArmadioAidlooker() {
 
   // pending purchase requests banner
   const pendingRequests = 1;
+
+  // store inquiries — negozio chiede se vuoi vendere un capo non in vendita
+  const [storeInquiries, setStoreInquiries] = useState([
+    {
+      id: 'si1',
+      storeName: 'Boutique Torino',
+      itemId: 11, // Loro Piana Maglia
+      brand: 'Loro Piana',
+      itemName: 'Cashmere Turtleneck',
+      size: 'S',
+      color: 'Camel',
+      expiresAt: Date.now() + 47 * 60 * 60 * 1000 + 23 * 60 * 1000,
+    },
+  ]);
+
+  const handleInquiryRespond = (id: string, accept: boolean) => {
+    setStoreInquiries(prev => prev.filter(i => i.id !== id));
+    if (accept) {
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    }
+  };
 
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), 1000);
@@ -105,6 +135,53 @@ export function ArmadioAidlooker() {
       )}
 
       <div className="px-4 mt-3 space-y-5">
+
+        {/* Store inquiries — negozio chiede se vuoi vendere */}
+        {storeInquiries.map(inq => {
+          const remaining = inq.expiresAt - now;
+          const urgent = remaining < 2 * 3600000; // < 2h
+          return (
+            <div
+              key={inq.id}
+              className={`border-[1.5px] rounded-[16px] p-4 ${urgent ? 'bg-amber-50 border-amber-400' : 'bg-card border-border'}`}
+            >
+              <div className="flex items-center gap-2 mb-2.5">
+                <Store size={13} className={urgent ? 'text-amber-600' : 'text-muted-foreground'} />
+                <span className={`text-[11px] font-bold flex-1 ${urgent ? 'text-amber-700' : 'text-foreground'}`}>
+                  {inq.storeName} ti fa una proposta
+                </span>
+                <span className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[12px] font-bold text-white ${urgent ? 'bg-amber-500' : 'bg-foreground'}`}>
+                  <Clock size={11} />
+                  {msToHours(remaining)}
+                </span>
+              </div>
+              {/* Item swatch */}
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-12 rounded-[8px] shrink-0 border border-black/5" style={{ backgroundColor: '#C4956A' }} />
+                <div>
+                  <p className="font-bold text-sm">{inq.brand}</p>
+                  <p className="text-xs text-muted-foreground">{inq.itemName} · {inq.color} · {inq.size}</p>
+                  <p className="text-[11px] text-muted-foreground mt-0.5">Non è in vendita — il negozio chiede se sei interessata</p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleInquiryRespond(inq.id, true)}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-primary text-primary-foreground text-xs font-bold rounded-[10px] active:scale-95 transition-transform"
+                >
+                  <CheckCircle size={13} /> Sì, parliamone
+                </button>
+                <button
+                  onClick={() => handleInquiryRespond(inq.id, false)}
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 bg-secondary text-foreground text-xs font-bold rounded-[10px] active:scale-95 transition-transform"
+                >
+                  <XCircle size={13} /> No, lo tengo
+                </button>
+              </div>
+            </div>
+          );
+        })}
+
         {/* Pending proposals */}
         {proposals.length > 0 && (
           <div>
