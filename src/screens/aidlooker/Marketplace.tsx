@@ -20,24 +20,31 @@ interface MarketItem {
   seller: string;
   condition?: Condition;
   supplierCode: string;
+  isNew?: boolean; // solo i nuovi arrivi recenti
 }
 
 const ALL_ITEMS: MarketItem[] = [
   // ── Nuovo (dai negozi) ─────────────────────────────────────────────────────
-  { id: 'n1',  type: 'nuovo', brand: 'Max Mara',     name: 'Teddy Coat',            category: 'Cappotto', color: 'Cammello',  imageColor: '#C4956A', price: 1290, sizes: ['XS','S','M'],       seller: 'Boutique Torino',   supplierCode: 'MM-TED-CAM-S'   },
-  { id: 'n2',  type: 'nuovo', brand: 'Carhartt WIP', name: 'Duck Active Jacket',    category: 'Giacca',   color: 'Marrone',   imageColor: '#8B5E3C', price: 190,  sizes: ['S','M','L','XL'],    seller: 'Store Milano',      supplierCode: 'CW-DJ-BRN-M'   },
-  { id: 'n3',  type: 'nuovo', brand: 'Gucci',        name: 'GG Monogram Blazer',    category: 'Blazer',   color: 'Beige',     imageColor: '#D2B48C', price: 2100, sizes: ['36','38','40'],       seller: 'Boutique Firenze',  supplierCode: 'GU-GG-BLZ-38'  },
-  { id: 'n4',  type: 'nuovo', brand: 'Stone Island', name: 'Light Jacket SS25',     category: 'Giacca',   color: 'Bianco',    imageColor: '#E8E8E4', price: 560,  sizes: ['M','L','XL'],        seller: 'Multibrand Roma',   supplierCode: 'SI-LJ-WHT-L'   },
-  { id: 'n5',  type: 'nuovo', brand: 'Prada',        name: 'Re-Nylon Trench',       category: 'Cappotto', color: 'Oliva',     imageColor: '#6B7B3A', price: 2350, sizes: ['XS','S'],            seller: 'Boutique Venezia',  supplierCode: 'PR-RN-TRN-S'   },
-  { id: 'n6',  type: 'nuovo', brand: 'Moncler',      name: 'Maya Short Down',       category: 'Piumino',  color: 'Nero',      imageColor: '#1a1a1a', price: 1350, sizes: ['S','M','L'],         seller: 'Store Napoli',      supplierCode: 'MC-MY-BLK-M'   },
-  { id: 'n7',  type: 'nuovo', brand: 'Toteme',       name: 'Scarf Collar Coat',     category: 'Cappotto', color: 'Grigio',    imageColor: '#9A9A9A', price: 890,  sizes: ['XS','S','M'],        seller: 'Boutique Bologna',  supplierCode: 'TOT-SC-GRY-S'  },
-  { id: 'n8',  type: 'nuovo', brand: 'C.P. Company', name: 'Goggle Jacket',         category: 'Giacca',   color: 'Blu Navy',  imageColor: '#1C3557', price: 690,  sizes: ['M','L','XL'],        seller: 'Multibrand Genova', supplierCode: 'CP-GG-BLU-L'   },
-  { id: 'n9',  type: 'nuovo', brand: 'A.P.C.',       name: 'Sailor Stripe Tee',     category: 'T-Shirt',  color: 'Bianco/Blu',imageColor: '#C8D8E8', price: 110,  sizes: ['XS','S','M','L'],    seller: 'Store Milano',      supplierCode: 'APC-SLR-BLK-M' },
-  { id: 'n10', type: 'nuovo', brand: 'Loro Piana',   name: 'Cashmere Turtleneck',   category: 'Maglia',   color: 'Camel',     imageColor: '#C4956A', price: 1180, sizes: ['XS','S','M'],        seller: 'Boutique Torino',   supplierCode: 'LOR-CSH-CAM-M' },
-  { id: 'n11', type: 'nuovo', brand: 'Ami Paris',    name: 'ADC Heart Hoodie',      category: 'Felpa',    color: 'Nero',      imageColor: '#1a1a1a', price: 320,  sizes: ['S','M','L'],         seller: 'Multibrand Roma',   supplierCode: 'AMI-HRT-BLK-S' },
-  { id: 'n12', type: 'nuovo', brand: 'Nike',         name: 'Air Force 1 \'07',       category: 'Scarpe',   color: 'Bianco',    imageColor: '#F5F5F0', price: 130,  sizes: ['40','41','42','43','44'], seller: 'Store Milano', supplierCode: 'NK-AF1-WHT-42' },
-  { id: 'n13', type: 'nuovo', brand: 'Levi\'s',      name: '501 Original Jeans',    category: 'Jeans',    color: 'Blu Denim', imageColor: '#3A5F8A', price: 100,  sizes: ['28','30','32','34'],  seller: 'Multibrand Torino', supplierCode: 'LEV-501-BLU-30' },
-  { id: 'n14', type: 'nuovo', brand: 'Arket',        name: 'Merino Crewneck',       category: 'Maglia',   color: 'Ecru',      imageColor: '#F0EAD6', price: 145,  sizes: ['XS','S','M','L'],    seller: 'Store Firenze',     supplierCode: 'ARC-MRW-ECR-M'  },
+  { id: 'n1',  type: 'nuovo', brand: 'Max Mara',     name: 'Teddy Coat',            category: 'Cappotto', color: 'Cammello',  imageColor: '#C4956A', price: 1290, sizes: ['XS','S','M'],            seller: 'Boutique Torino',    supplierCode: 'MM-TED-CAM-S',   isNew: true  },
+  { id: 'n2',  type: 'nuovo', brand: 'Carhartt WIP', name: 'Duck Active Jacket',    category: 'Giacca',   color: 'Marrone',   imageColor: '#8B5E3C', price: 190,  sizes: ['S','M','L','XL'],         seller: 'Store Milano',       supplierCode: 'CW-DJ-BRN-M'          },
+  { id: 'n3',  type: 'nuovo', brand: 'Gucci',        name: 'GG Monogram Blazer',    category: 'Blazer',   color: 'Beige',     imageColor: '#D2B48C', price: 2100, sizes: ['36','38','40'],            seller: 'Boutique Firenze',   supplierCode: 'GU-GG-BLZ-38'         },
+  { id: 'n4',  type: 'nuovo', brand: 'Stone Island', name: 'Light Jacket SS25',     category: 'Giacca',   color: 'Bianco',    imageColor: '#E8E8E4', price: 560,  sizes: ['M','L','XL'],             seller: 'Multibrand Roma',    supplierCode: 'SI-LJ-WHT-L',    isNew: true  },
+  { id: 'n5',  type: 'nuovo', brand: 'Prada',        name: 'Re-Nylon Trench',       category: 'Cappotto', color: 'Oliva',     imageColor: '#6B7B3A', price: 2350, sizes: ['XS','S'],                 seller: 'Boutique Venezia',   supplierCode: 'PR-RN-TRN-S'          },
+  { id: 'n6',  type: 'nuovo', brand: 'Moncler',      name: 'Maya Short Down',       category: 'Piumino',  color: 'Nero',      imageColor: '#1a1a1a', price: 1350, sizes: ['S','M','L'],              seller: 'Store Napoli',       supplierCode: 'MC-MY-BLK-M',    isNew: true  },
+  { id: 'n7',  type: 'nuovo', brand: 'Toteme',       name: 'Scarf Collar Coat',     category: 'Cappotto', color: 'Grigio',    imageColor: '#9A9A9A', price: 890,  sizes: ['XS','S','M'],             seller: 'Boutique Bologna',   supplierCode: 'TOT-SC-GRY-S'         },
+  { id: 'n8',  type: 'nuovo', brand: 'C.P. Company', name: 'Goggle Jacket',         category: 'Giacca',   color: 'Blu Navy',  imageColor: '#1C3557', price: 690,  sizes: ['M','L','XL'],             seller: 'Multibrand Genova',  supplierCode: 'CP-GG-BLU-L'          },
+  { id: 'n9',  type: 'nuovo', brand: 'A.P.C.',       name: 'Sailor Stripe Tee',     category: 'T-Shirt',  color: 'Bianco/Blu',imageColor: '#C8D8E8', price: 110,  sizes: ['XS','S','M','L'],         seller: 'Store Milano',       supplierCode: 'APC-SLR-BLK-M'        },
+  { id: 'n10', type: 'nuovo', brand: 'Loro Piana',   name: 'Cashmere Turtleneck',   category: 'Maglia',   color: 'Camel',     imageColor: '#C4956A', price: 1180, sizes: ['XS','S','M'],             seller: 'Boutique Torino',    supplierCode: 'LOR-CSH-CAM-M'        },
+  { id: 'n11', type: 'nuovo', brand: 'Ami Paris',    name: 'ADC Heart Hoodie',      category: 'Felpa',    color: 'Nero',      imageColor: '#1a1a1a', price: 320,  sizes: ['S','M','L'],              seller: 'Multibrand Roma',    supplierCode: 'AMI-HRT-BLK-S', isNew: true  },
+  { id: 'n12', type: 'nuovo', brand: 'Nike',         name: 'Air Force 1 \'07',      category: 'Scarpe',   color: 'Bianco',    imageColor: '#F5F5F0', price: 130,  sizes: ['40','41','42','43','44'],  seller: 'Store Milano',       supplierCode: 'NK-AF1-WHT-42'         },
+  { id: 'n13', type: 'nuovo', brand: 'Levi\'s',      name: '501 Original Jeans',    category: 'Jeans',    color: 'Blu Denim', imageColor: '#3A5F8A', price: 100,  sizes: ['28','30','32','34'],       seller: 'Multibrand Torino',  supplierCode: 'LEV-501-BLU-30'        },
+  { id: 'n14', type: 'nuovo', brand: 'Arket',        name: 'Merino Crewneck',       category: 'Maglia',   color: 'Ecru',      imageColor: '#F0EAD6', price: 145,  sizes: ['XS','S','M','L'],         seller: 'Store Firenze',      supplierCode: 'ARC-MRW-ECR-M'         },
+  { id: 'n15', type: 'nuovo', brand: 'Bottega Veneta',name: 'Intrecciato Tote',     category: 'Borsa',    color: 'Nero',      imageColor: '#1a1a1a', price: 3200, sizes: ['Unica'],                  seller: 'Boutique Milano',    supplierCode: 'BV-IT-BLK-U',   isNew: true  },
+  { id: 'n16', type: 'nuovo', brand: 'Jacquemus',    name: 'Le Chiquito',           category: 'Borsa',    color: 'Sabbia',    imageColor: '#D4B896', price: 590,  sizes: ['Unica'],                  seller: 'Boutique Firenze',   supplierCode: 'JAC-CHQ-SND-U'        },
+  { id: 'n17', type: 'nuovo', brand: 'Acne Studios', name: 'Wool Scarf Coat',       category: 'Cappotto', color: 'Rosa Antico',imageColor: '#D4A5A0',price: 1250, sizes: ['XS','S','M'],             seller: 'Store Milano',       supplierCode: 'ACN-WSC-PNK-S', isNew: true  },
+  { id: 'n18', type: 'nuovo', brand: 'Golden Goose', name: 'Ball Star Sneaker',     category: 'Scarpe',   color: 'Bianco/Oro',imageColor: '#EDE5C0', price: 535,  sizes: ['37','38','39','40','41'],  seller: 'Multibrand Venezia', supplierCode: 'GG-BS-WHT-39'         },
+  { id: 'n19', type: 'nuovo', brand: 'Brunello Cucinelli',name: 'Cashmere Cardigan',category: 'Maglia',   color: 'Tortora',   imageColor: '#C8B89A', price: 1890, sizes: ['XS','S','M','L'],         seller: 'Boutique Venezia',   supplierCode: 'BC-CSH-TOR-M'         },
+  { id: 'n20', type: 'nuovo', brand: 'Isabel Marant', name: 'Étoile Denim Jacket',  category: 'Giacca',   color: 'Blu Sbiadito',imageColor: '#7A9BB5',price: 420, sizes: ['34','36','38','40'],       seller: 'Boutique Roma',      supplierCode: 'IM-DNM-BLU-36'        },
   // ── Second Hand ────────────────────────────────────────────────────────────
   { id: 'sh1',  type: 'secondhand', brand: 'Gucci',        name: 'GG Monogram Blazer',   category: 'Blazer',   color: 'Beige',    imageColor: '#D2B48C', price: 320,  size: '38', seller: 'Sofia F.',     condition: 'ottimo',   supplierCode: 'GU-GG-BLZ-38'  },
   { id: 'sh2',  type: 'secondhand', brand: 'Carhartt WIP', name: 'Duck Active Jacket',   category: 'Giacca',   color: 'Marrone',  imageColor: '#8B5E3C', price: 110,  size: 'M',  seller: 'Luca T.',      condition: 'buono',    supplierCode: 'CW-DJ-BRN-M'   },
@@ -257,14 +264,17 @@ export function MarketplaceAidlooker() {
               className="mx-5 rounded-[16px] h-52 flex items-end p-4 relative overflow-hidden"
               style={{ backgroundColor: selected.imageColor }}
             >
-              {/* Type badge */}
-              <span className={`absolute top-3 left-3 text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                selected.type === 'nuovo'
-                  ? 'bg-black/60 text-white'
-                  : 'bg-white/80 text-gray-800'
-              }`}>
-                {selected.type === 'nuovo' ? 'NUOVO' : 'SECOND HAND'}
-              </span>
+              {/* Badge NEW solo sui nuovi arrivi, SECOND HAND per usato */}
+              {selected.isNew && (
+                <span className="absolute top-3 left-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/60 text-white tracking-wide">
+                  NUOVO ARRIVO
+                </span>
+              )}
+              {selected.type === 'secondhand' && (
+                <span className="absolute top-3 left-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/80 text-gray-800">
+                  SECOND HAND
+                </span>
+              )}
 
               {/* Condition (secondhand) */}
               {selected.condition && (
@@ -383,14 +393,17 @@ function ProductCard({
           className="absolute inset-0"
           style={{ backgroundColor: item.imageColor }}
         />
-        {/* Type pill */}
-        <span className={`absolute top-2 left-2 text-[9px] font-bold px-1.5 py-0.5 rounded-full ${
-          item.type === 'nuovo'
-            ? 'bg-black/50 text-white'
-            : 'bg-white/80 text-gray-800'
-        }`}>
-          {item.type === 'nuovo' ? 'NEW' : 'S/H'}
-        </span>
+        {/* Type pill — NEW solo sui nuovi arrivi, S/H per il second hand */}
+        {item.isNew && (
+          <span className="absolute top-2 left-2 text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-black/60 text-white tracking-wide">
+            NEW
+          </span>
+        )}
+        {item.type === 'secondhand' && (
+          <span className="absolute top-2 left-2 text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-white/80 text-gray-800">
+            S/H
+          </span>
+        )}
         {/* Condition dot (secondhand) */}
         {item.condition && (
           <span className={`absolute bottom-2 right-2 text-[9px] font-semibold px-1.5 py-0.5 rounded-full border ${CONDITION_STYLE[item.condition]}`}>

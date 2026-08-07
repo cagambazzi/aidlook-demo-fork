@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, Store } from 'lucide-react';
 
 interface MemberNotif {
   id: string;
-  type: 'purchase_request' | 'sale_confirmed' | 'package';
+  type: 'purchase_request' | 'sale_confirmed' | 'package' | 'store_inquiry';
   emoji: string;
   title: string;
   body: string;
   offeredPrice?: number;
   requesterName?: string;
+  storeName?: string;
+  itemBrand?: string;
+  itemName?: string;
   read: boolean;
   responded?: boolean;
   response?: 'accepted' | 'declined';
@@ -16,6 +19,19 @@ interface MemberNotif {
 }
 
 const INITIAL_NOTIFS: MemberNotif[] = [
+  {
+    id: 'n0',
+    type: 'store_inquiry',
+    emoji: '🏪',
+    title: 'Il tuo negozio ti ha fatto una domanda',
+    body: 'Boutique Torino ha notato il Loro Piana Cashmere Turtleneck nel tuo armadio — non è in vendita, ma hanno un cliente che lo cerca disperatamente. Saresti disposta a valutare una proposta?',
+    storeName: 'Boutique Torino',
+    itemBrand: 'Loro Piana',
+    itemName: 'Cashmere Turtleneck',
+    read: false,
+    responded: false,
+    time: '30min fa',
+  },
   {
     id: 'n1',
     type: 'purchase_request',
@@ -72,11 +88,17 @@ export function NotificheAidlooker() {
     setNotifs(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
   }
 
-  function handleRespond(id: string, response: 'accepted' | 'declined') {
+  function handleRespond(id: string, response: 'accepted' | 'declined', customToast?: string) {
     setNotifs(prev => prev.map(n => n.id === id ? { ...n, responded: true, response, read: true } : n));
-    const notif = notifs.find(n => n.id === id);
-    if (response === 'accepted' && notif) {
-      showToast(`✓ Accettato — riceverai €${notif.offeredPrice} entro 48h`);
+    if (response === 'accepted') {
+      if (customToast) {
+        showToast(customToast);
+      } else {
+        const notif = notifs.find(n => n.id === id);
+        if (notif?.offeredPrice) {
+          showToast(`✓ Accettato — riceverai €${notif.offeredPrice} entro 48h`);
+        }
+      }
     }
   }
 
@@ -129,7 +151,33 @@ export function NotificheAidlooker() {
                   </div>
                 )}
 
-                {/* Accept/Decline buttons */}
+                {/* Store inquiry: item tag */}
+                {n.type === 'store_inquiry' && n.itemBrand && (
+                  <div className="mt-2 flex items-center gap-1.5 bg-secondary px-2.5 py-1.5 rounded-lg w-fit">
+                    <Store size={11} className="text-muted-foreground" />
+                    <span className="text-[11px] font-semibold text-foreground">{n.itemBrand} — {n.itemName}</span>
+                  </div>
+                )}
+
+                {/* Store inquiry: accept/decline */}
+                {n.type === 'store_inquiry' && !n.responded && (
+                  <div className="flex gap-2 mt-3">
+                    <button
+                      onClick={e => { e.stopPropagation(); handleRespond(n.id, 'accepted', '✓ Perfetto! Il negozio ti contatterà per i dettagli'); }}
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 bg-primary text-primary-foreground text-xs font-bold rounded-[8px] active:scale-95 transition-transform"
+                    >
+                      <CheckCircle size={13} /> Sì, parliamone
+                    </button>
+                    <button
+                      onClick={e => { e.stopPropagation(); handleRespond(n.id, 'declined'); }}
+                      className="flex-1 flex items-center justify-center gap-1.5 py-2 bg-secondary text-foreground text-xs font-bold rounded-[8px] active:scale-95 transition-transform"
+                    >
+                      <XCircle size={13} /> No, lo tengo
+                    </button>
+                  </div>
+                )}
+
+                {/* Accept/Decline buttons — purchase_request */}
                 {n.type === 'purchase_request' && !n.responded && (
                   <div className="flex gap-2 mt-3">
                     <button
@@ -148,11 +196,14 @@ export function NotificheAidlooker() {
                 )}
 
                 {/* Responded state */}
-                {n.type === 'purchase_request' && n.responded && (
+                {(n.type === 'purchase_request' || n.type === 'store_inquiry') && n.responded && (
                   <div className={`mt-2 inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg ${
                     n.response === 'accepted' ? 'bg-green-100 text-green-700' : 'bg-secondary text-muted-foreground'
                   }`}>
-                    {n.response === 'accepted' ? <><CheckCircle size={12} /> Hai accettato</> : <><XCircle size={12} /> Hai declinato</>}
+                    {n.response === 'accepted'
+                      ? <><CheckCircle size={12} /> {n.type === 'store_inquiry' ? 'Disponibile a parlarne' : 'Hai accettato'}</>
+                      : <><XCircle size={12} /> {n.type === 'store_inquiry' ? 'Hai preferito tenerlo' : 'Hai declinato'}</>
+                    }
                   </div>
                 )}
               </div>

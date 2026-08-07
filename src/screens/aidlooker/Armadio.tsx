@@ -1,14 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Plus, Clock, ChevronRight, X, Shirt, Bell, RefreshCw } from 'lucide-react';
 
-const CATEGORIES = ['Tutti', 'Cappotto', 'Giacca', 'Blusa', 'Pantaloni', 'Jeans', 'Vestito', 'Accessori', 'Borsa', 'Scarpe'];
+const CATEGORIES = ['Tutti', 'Cappotto', 'Giacca', 'Piumino', 'Felpa', 'Maglia', 'Blusa', 'Pantaloni', 'Jeans', 'Borsa', 'Scarpe'];
 
 const ITEMS = [
-  { id: 1, brand: 'Max Mara', name: 'Cappotto', colorName: 'Cammello', size: 'S', color: '#C4956A', from: 'Boutique Milano', price: '€890', forSale: true, salePrice: '€450' },
-  { id: 2, brand: 'A.P.C.', name: 'Pantaloni', colorName: 'Nero', size: 'S', color: '#1a1a1a', price: '€195' },
-  { id: 3, brand: 'Valentino', name: 'Blusa', colorName: 'Bianco', size: 'S', color: '#F5F5F0', from: 'Boutique Roma', price: '€420' },
-  { id: 4, brand: 'Totème', name: 'Pantaloni', colorName: 'Beige', size: 'S', color: '#D2B48C', price: '€320', forSale: true, salePrice: '€320' },
-  { id: 5, brand: 'Gucci', name: 'Borsa', colorName: 'Marrone', size: 'Unica', color: '#8B5E3C', price: '€1200' },
+  { id: 1,  brand: 'Max Mara',     name: 'Cappotto',  colorName: 'Cammello',  size: 'S',     color: '#C4956A', from: 'Boutique Milano',  price: '€890',  forSale: true,  salePrice: '€450' },
+  { id: 2,  brand: 'A.P.C.',       name: 'Pantaloni', colorName: 'Nero',      size: 'S',     color: '#1a1a1a',                           price: '€195' },
+  { id: 3,  brand: 'Valentino',    name: 'Blusa',     colorName: 'Bianco',    size: 'S',     color: '#F5F5F0', from: 'Boutique Roma',    price: '€420' },
+  { id: 4,  brand: 'Totème',       name: 'Pantaloni', colorName: 'Beige',     size: 'S',     color: '#D2B48C',                           price: '€320',  forSale: true,  salePrice: '€320' },
+  { id: 5,  brand: 'Gucci',        name: 'Borsa',     colorName: 'Marrone',   size: 'Unica', color: '#8B5E3C',                           price: '€1200' },
+  { id: 6,  brand: 'Stone Island', name: 'Giacca',    colorName: 'Bianco',    size: 'L',     color: '#E8E8E4', from: 'Multibrand Roma',  price: '€560' },
+  { id: 7,  brand: 'Moncler',      name: 'Piumino',   colorName: 'Nero',      size: 'M',     color: '#1a1a1a', from: 'Store Napoli',     price: '€1350', forSale: true,  salePrice: '€780' },
+  { id: 8,  brand: 'Ami Paris',    name: 'Felpa',     colorName: 'Nero',      size: 'M',     color: '#1a1a1a',                           price: '€320' },
+  { id: 9,  brand: 'Totème',       name: 'Cappotto',  colorName: 'Grigio',    size: 'S',     color: '#9A9A9A', from: 'Boutique Bologna', price: '€890' },
+  { id: 10, brand: 'Levi\'s',      name: 'Jeans',     colorName: 'Blu Denim', size: '30',    color: '#3A5F8A',                           price: '€100' },
+  { id: 11, brand: 'Loro Piana',   name: 'Maglia',    colorName: 'Camel',     size: 'S',     color: '#C4956A', from: 'Boutique Torino',  price: '€1180' },
+  { id: 12, brand: 'Nike',         name: 'Scarpe',    colorName: 'Bianco',    size: '42',    color: '#F5F5F0',                           price: '€130' },
+  { id: 13, brand: 'Prada',        name: 'Borsa',     colorName: 'Nero',      size: 'Unica', color: '#1a1a1a', from: 'Boutique Venezia', price: '€2100' },
+  { id: 14, brand: 'Carhartt WIP', name: 'Giacca',    colorName: 'Marrone',   size: 'M',     color: '#8B5E3C',                           price: '€190' },
+  { id: 15, brand: 'C.P. Company', name: 'Giacca',    colorName: 'Blu Navy',  size: 'L',     color: '#1C3557', from: 'Multibrand Genova',price: '€690' },
+  { id: 16, brand: 'Arket',        name: 'Maglia',    colorName: 'Ecru',      size: 'M',     color: '#F0EAD6',                           price: '€145' },
 ];
 
 function msToCountdown(ms: number): string {
