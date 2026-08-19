@@ -76,7 +76,7 @@ const INITIAL_NOTIFS: MemberNotif[] = [
   },
 ];
 
-export function NotificheAidlooker() {
+export function NotificheUtente() {
   const [notifs, setNotifs] = useState<MemberNotif[]>(INITIAL_NOTIFS);
   const [toast, setToast] = useState('');
 

@@ -62,7 +62,7 @@ const NETWORK_ITEMS: NetworkItem[] = [
 
 const CATEGORIES = ['Tutti', 'Cappotto', 'Giacca', 'Piumino', 'Blazer', 'Felpa', 'Maglia', 'T-Shirt', 'Jeans', 'Scarpe', 'Borsa'];
 
-// ── Second-hand: Aidlooker wardrobe items ─────────────────────────────────────
+// ── Second-hand: Utente wardrobe items ─────────────────────────────────────
 
 interface WardrobeItem {
   id: string;
@@ -522,7 +522,7 @@ export function MagazzinoAttivita() {
               <div>
                 <p className="font-semibold text-sm mb-1">Cerca un articolo nella rete</p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Inserisci il codice fornitore (es. <span className="font-mono bg-secondary px-1 py-0.5 rounded text-[10px]">MC-MY-BLK-M</span>) o il nome del brand per vedere tutti gli Aidlooker che hanno quell'articolo nell'armadio.
+                  Inserisci il codice fornitore (es. <span className="font-mono bg-secondary px-1 py-0.5 rounded text-[10px]">MC-MY-BLK-M</span>) o il nome del brand per vedere tutti gli Utenti che hanno quell'articolo nell'armadio.
                 </p>
               </div>
               <div className="flex flex-col gap-1.5 w-full mt-1">
@@ -571,7 +571,7 @@ export function MagazzinoAttivita() {
                       </div>
                     </div>
 
-                    {/* Aidlooker rows */}
+                    {/* Utente rows */}
                     <div className="space-y-2 pl-1">
                       {items.map(w => {
                         const sent = sentInquiries.has(w.id);

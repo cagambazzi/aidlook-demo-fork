@@ -6,7 +6,7 @@ interface Props {
   onNavigate: (tab: string) => void;
 }
 
-export function HomeAidlooker({ onLogout, onNavigate }: Props) {
+export function HomeUtente({ onLogout, onNavigate }: Props) {
   const recentItems = [
     { id: 1, brand: 'Max Mara', category: 'Cappotto', color: '#D4B895' }, // Cammello
     { id: 2, brand: 'A.P.C.', category: 'Pantaloni', color: '#1a1a1a' }, // Nero
@@ -21,11 +21,11 @@ export function HomeAidlooker({ onLogout, onNavigate }: Props) {
         <div className="flex justify-between items-start mb-6">
           <div>
             <p className="text-xs text-white/60 mb-1 font-medium">Il tuo guardaroba</p>
-            <h1 className="text-2xl font-bold tracking-[4px]">AIDLOOK</h1>
+            <h1 className="text-2xl font-bold tracking-[4px]">TESSIU</h1>
           </div>
           <div className="flex items-center gap-3">
             <div className="bg-accent/20 border border-accent/40 text-accent text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-              Aidlooker
+              Utente
             </div>
             <button onClick={onLogout} className="p-2 hover:bg-white/10 rounded-full transition-colors">
               <LogOut size={18} className="text-white/80" />
@@ -116,7 +116,7 @@ export function HomeAidlooker({ onLogout, onNavigate }: Props) {
             <span className="text-white font-bold tracking-widest text-xs">AL</span>
           </div>
           <div>
-            <h3 className="text-sm font-bold tracking-[2px] mb-1">AIDLOOK</h3>
+            <h3 className="text-sm font-bold tracking-[2px] mb-1">TESSIU</h3>
             <p className="text-[10px] text-muted-foreground leading-snug">
               Il guardaroba digitale più smart d'Italia
             </p>

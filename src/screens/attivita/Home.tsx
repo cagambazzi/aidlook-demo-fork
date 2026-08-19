@@ -14,7 +14,7 @@ export function HomeAttivita({ onLogout, onNavigate }: Props) {
         <div className="flex justify-between items-start mb-6">
           <div>
             <p className="text-xs text-white/60 mb-1 font-medium">Boutique Milano</p>
-            <h1 className="text-2xl font-bold tracking-[4px]">AIDLOOK</h1>
+            <h1 className="text-2xl font-bold tracking-[4px]">TESSIU</h1>
           </div>
           <div className="flex items-center gap-3">
             <div className="bg-accent text-[#0a0a0a] text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
@@ -87,7 +87,7 @@ export function HomeAttivita({ onLogout, onNavigate }: Props) {
             <span className="text-white font-bold tracking-widest text-xs">AL</span>
           </div>
           <div className="z-10">
-            <h3 className="text-sm font-bold tracking-[2px] text-white mb-1">AIDLOOK</h3>
+            <h3 className="text-sm font-bold tracking-[2px] text-white mb-1">TESSIU</h3>
             <p className="text-[10px] text-white/60 leading-snug">
               Il CRM per boutique e negozi di moda
             </p>

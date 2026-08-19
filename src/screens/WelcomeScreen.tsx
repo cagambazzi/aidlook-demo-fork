@@ -10,7 +10,7 @@ export function WelcomeScreen({ onSelectRole }: { onSelectRole: (role: Role) => 
         {/* Logo Section */}
         <div className="flex flex-col items-center space-y-4">
           <h1 className="text-4xl font-bold tracking-[6px] text-primary">
-            AIDLOOK
+            TESSIU
           </h1>
           <p className="text-muted-foreground font-medium">
             Il tuo guardaroba. Intelligente.
@@ -21,19 +21,19 @@ export function WelcomeScreen({ onSelectRole }: { onSelectRole: (role: Role) => 
         {/* Selection Section */}
         <div className="w-full space-y-4 mt-12 pt-8">
           <p className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-6">
-            Come vuoi usare AIDLOOK?
+            Come vuoi usare TESSIU?
           </p>
 
-          {/* Aidlooker Card */}
+          {/* Utente Card */}
           <button 
-            onClick={() => onSelectRole('aidlooker')}
+            onClick={() => onSelectRole('utente')}
             className="w-full flex items-center p-5 bg-card border border-border rounded-2xl shadow-sm hover:shadow-md transition-all active:scale-[0.98] text-left group"
           >
             <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center shrink-0 mr-4 group-hover:bg-accent/10 group-hover:text-accent transition-colors">
               <User size={24} className="text-primary group-hover:text-accent" />
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-bold text-primary mb-1">Aidlooker</h3>
+              <h3 className="text-lg font-bold text-primary mb-1">Utente</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
                 Gestisci il tuo armadio digitale, monitora i tuoi acquisti e compra o vendi capi second hand
               </p>

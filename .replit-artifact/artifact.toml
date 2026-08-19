@@ -1,23 +1,23 @@
 kind = "web"
-previewPath = "/aidlook-demo/"
-title = "AIDLOOK Demo Web"
-description = "Versione web demo dell'app AIDLOOK. Replica fedelmente tutte le schermate dell'app mobile (Aidlooker e Attività) in un frame telefono, con dati mock identici all'app Expo. Scopo: condividere con investitori/clienti via link senza installare nulla."
+previewPath = "/tessiu-demo/"
+title = "TESSIU Demo Web"
+description = "Versione web demo dell'app TESSIU. Replica fedelmente tutte le schermate dell'app mobile (Utente e Attività) in un frame telefono, con dati mock identici all'app Expo. Scopo: condividere con investitori/clienti via link senza installare nulla."
 version = "1.0.0"
-id = "artifacts/aidlook-demo"
+id = "artifacts/tessiu-demo"
 router = "path"
 
 [[services]]
 name = "web"
-paths = [ "/aidlook-demo/" ]
+paths = [ "/tessiu-demo/" ]
 localPort = 25117
 
 [services.development]
-run = "pnpm --filter @workspace/aidlook-demo run dev"
+run = "pnpm --filter @workspace/tessiu-demo run dev"
 
 [services.production]
-build = [ "pnpm", "--filter", "@workspace/aidlook-demo", "run", "build" ]
+build = [ "pnpm", "--filter", "@workspace/tessiu-demo", "run", "build" ]
 serve = "static"
-publicDir = "artifacts/aidlook-demo/dist/public"
+publicDir = "artifacts/tessiu-demo/dist/public"
 
 [[services.production.rewrites]]
 from = "/*"
@@ -25,4 +25,4 @@ to = "/index.html"
 
 [services.env]
 PORT = "25117"
-BASE_PATH = "/aidlook-demo/"
+BASE_PATH = "/tessiu-demo/"

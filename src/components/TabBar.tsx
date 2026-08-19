@@ -1,7 +1,7 @@
 import React from 'react';
 import { Home, Shirt, Search, Bell, Shield, Users, Package, ShoppingCart } from 'lucide-react';
 
-export type Role = 'welcome' | 'aidlooker' | 'attivita';
+export type Role = 'welcome' | 'utente' | 'attivita';
 
 interface TabBarProps {
   role: Role;
@@ -12,7 +12,7 @@ interface TabBarProps {
 export function TabBar({ role, currentTab, onTabChange }: TabBarProps) {
   if (role === 'welcome') return null;
 
-  const aidlookerTabs = [
+  const utenteTabs = [
     { id: 'home', label: 'Home', icon: Home },
     { id: 'armadio', label: 'Armadio', icon: Shirt },
     { id: 'marketplace', label: 'Cerca', icon: Search },
@@ -29,7 +29,7 @@ export function TabBar({ role, currentTab, onTabChange }: TabBarProps) {
     { id: 'passaporto', label: 'Pass.', icon: Shield },
   ];
 
-  const tabs = role === 'aidlooker' ? aidlookerTabs : attivitaTabs;
+  const tabs = role === 'utente' ? utenteTabs : attivitaTabs;
 
   return (
     <div className="h-[60px] sm:h-[80px] sm:pb-5 w-full bg-white border-t border-border flex items-center justify-around px-2 shrink-0 z-50 relative">
