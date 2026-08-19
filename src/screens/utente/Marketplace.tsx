@@ -77,7 +77,7 @@ type Segment = 'tutti' | 'nuovo' | 'secondhand';
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-export function MarketplaceAidlooker() {
+export function MarketplaceUtente() {
   const [query, setQuery] = useState('');
   const [segment, setSegment] = useState<Segment>('tutti');
   const [category, setCategory] = useState('Tutti');
@@ -209,7 +209,7 @@ export function MarketplaceAidlooker() {
                 Il capo che cerchi esiste già — è nell'armadio di qualcuno.
               </p>
               <p className="text-[11px] text-white/60 mt-1 leading-relaxed">
-                Il tuo negozio Aidlook può cercarlo nella rete: magari chi lo possiede è pronto a venderlo.
+                Il tuo negozio Tessiu può cercarlo nella rete: magari chi lo possiede è pronto a venderlo.
               </p>
               <button className="mt-2.5 inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/20 transition-colors text-white text-[11px] font-semibold px-3 py-1.5 rounded-full">
                 <span>Chiedi al negozio</span>

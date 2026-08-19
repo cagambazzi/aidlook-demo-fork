@@ -22,7 +22,7 @@ const MOCK_PASSPORT = {
   history: [
     { date: '12 Mar 2025', event: 'Produzione & spedizione',  detail: 'Stabilimento Bangladesh → Boutique Milano Centro' },
     { date: '12 Mar 2025', event: 'Venduto in negozio',       detail: 'Boutique Milano Centro → Marco B.' },
-    { date: '15 Mar 2025', event: 'Registrato nel Guardaroba', detail: 'Marco B. · Aidlook' },
+    { date: '15 Mar 2025', event: 'Registrato nel Guardaroba', detail: 'Marco B. · Tessiu' },
   ],
 };
 
@@ -238,7 +238,7 @@ export function PassaportoScreen({ storeMode = false }: { storeMode?: boolean })
                 </div>
                 <div className="flex-1">
                   <p className="font-bold text-sm">Proprietario attuale</p>
-                  <p className="text-xs text-muted-foreground">{MOCK_PASSPORT.currentOwner} · Aidlook</p>
+                  <p className="text-xs text-muted-foreground">{MOCK_PASSPORT.currentOwner} · Tessiu</p>
                 </div>
                 {MOCK_PASSPORT.ownerForSale ? (
                   <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full border border-emerald-300">In vendita</span>

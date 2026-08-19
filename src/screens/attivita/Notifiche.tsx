@@ -19,7 +19,7 @@ const INITIAL_NOTIFS: StoreNotif[] = [
     type: 'sold_out_alert',
     emoji: '🔴',
     title: 'Esaurito in rete',
-    body: 'Max Mara Teddy Coat (MM-TED-CAM-S) sta per esaurirsi nella rete Aidlook. Hai 2 pezzi in magazzino — pubblicali sul B2B.',
+    body: 'Max Mara Teddy Coat (MM-TED-CAM-S) sta per esaurirsi nella rete Tessiu. Hai 2 pezzi in magazzino — pubblicali sul B2B.',
     supplierCode: 'MM-TED-CAM-S',
     actionLabel: 'Pubblica sul B2B',
     read: false,
@@ -62,7 +62,7 @@ const INITIAL_NOTIFS: StoreNotif[] = [
 
 function getDialogText(notif: StoreNotif): string {
   if (notif.type === 'sold_out_alert') {
-    return `Stai per pubblicare ${notif.supplierCode} nel mercato B2B di Aidlook. I negozi della rete potranno fare un'offerta immediata.`;
+    return `Stai per pubblicare ${notif.supplierCode} nel mercato B2B di Tessiu. I negozi della rete potranno fare un'offerta immediata.`;
   }
   if (notif.type === 'secondhand_trend') {
     return `Questo prodotto ha generato 14 vendite second-hand questo mese. Uno sconto del 15-20% ti permette di smaltire lo stock prima che si svaluti ulteriormente.`;
@@ -85,7 +85,7 @@ export function NotificheAttivita() {
   }
 
   function confirmAction() {
-    showToast('✓ Azione registrata nella rete Aidlook');
+    showToast('✓ Azione registrata nella rete Tessiu');
     setConfirmDialog(null);
   }
 

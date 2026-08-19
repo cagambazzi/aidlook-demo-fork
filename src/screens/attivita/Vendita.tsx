@@ -100,7 +100,7 @@ function SincronizzazioneCassa() {
       <div className="bg-secondary rounded-[12px] p-3 flex gap-2.5 items-start">
         <Zap size={14} className="text-muted-foreground mt-0.5 shrink-0" />
         <p className="text-xs text-muted-foreground leading-relaxed">
-          Ogni vendita registrata in cassa viene sincronizzata automaticamente su Aidlook. Il guardaroba digitale del cliente si aggiorna senza nessuna azione da parte tua.
+          Ogni vendita registrata in cassa viene sincronizzata automaticamente su Tessiu. Il guardaroba digitale del cliente si aggiorna senza nessuna azione da parte tua.
         </p>
       </div>
 
@@ -180,7 +180,7 @@ function MagazzinoB2B() {
       <div className="bg-secondary border-b border-border px-4 py-3 flex gap-2.5 items-start shrink-0">
         <Store size={13} className="text-muted-foreground mt-0.5 shrink-0" />
         <p className="text-xs text-muted-foreground leading-relaxed">
-          Altri negozi della rete Aidlook caricano qui invenduti e overstock. Acquistali a prezzo wholesale e aggiungili al tuo magazzino.
+          Altri negozi della rete Tessiu caricano qui invenduti e overstock. Acquistali a prezzo wholesale e aggiungili al tuo magazzino.
         </p>
       </div>
 

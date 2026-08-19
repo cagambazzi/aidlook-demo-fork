@@ -3,11 +3,11 @@ import { PhoneFrame } from './components/PhoneFrame';
 import { TabBar, Role } from './components/TabBar';
 import { WelcomeScreen } from './screens/WelcomeScreen';
 
-// Aidlooker
-import { HomeAidlooker } from './screens/aidlooker/Home';
-import { ArmadioAidlooker } from './screens/aidlooker/Armadio';
-import { MarketplaceAidlooker } from './screens/aidlooker/Marketplace';
-import { NotificheAidlooker } from './screens/aidlooker/Notifiche';
+// Utente
+import { HomeUtente } from './screens/utente/Home';
+import { ArmadioUtente } from './screens/utente/Armadio';
+import { MarketplaceUtente } from './screens/utente/Marketplace';
+import { NotificheUtente } from './screens/utente/Notifiche';
 import { PassaportoScreen } from './screens/Passaporto';
 
 // Attività
@@ -34,14 +34,14 @@ export default function App() {
   const renderScreen = () => {
     if (role === 'welcome') return <WelcomeScreen onSelectRole={handleSetRole} />;
 
-    if (role === 'aidlooker') {
+    if (role === 'utente') {
       switch (currentTab) {
-        case 'home': return <HomeAidlooker onLogout={handleLogout} onNavigate={setCurrentTab} />;
-        case 'armadio': return <ArmadioAidlooker />;
-        case 'marketplace': return <MarketplaceAidlooker />;
-        case 'notifiche': return <NotificheAidlooker />;
+        case 'home': return <HomeUtente onLogout={handleLogout} onNavigate={setCurrentTab} />;
+        case 'armadio': return <ArmadioUtente />;
+        case 'marketplace': return <MarketplaceUtente />;
+        case 'notifiche': return <NotificheUtente />;
         case 'passaporto': return <PassaportoScreen />;
-        default: return <HomeAidlooker onLogout={handleLogout} onNavigate={setCurrentTab} />;
+        default: return <HomeUtente onLogout={handleLogout} onNavigate={setCurrentTab} />;
       }
     }
 

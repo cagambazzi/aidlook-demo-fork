@@ -37,7 +37,7 @@ function msToHours(ms: number): string {
   return `${m}m`;
 }
 
-export function ArmadioAidlooker() {
+export function ArmadioUtente() {
   const [activeCategory, setActiveCategory] = useState('Tutti');
   const [showAddModal, setShowAddModal] = useState(false);
   const [showToast, setShowToast] = useState(false);

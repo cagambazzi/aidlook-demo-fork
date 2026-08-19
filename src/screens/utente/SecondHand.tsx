@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { User } from 'lucide-react';
 
-export function SecondHandAidlooker() {
+export function SecondHandUtente() {
   const [tab, setTab] = useState<'miei' | 'esplora'>('esplora');
 
   const myItems = [
